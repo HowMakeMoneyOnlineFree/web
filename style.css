@@ -106,7 +106,8 @@ main {
 .content-card img {
     width: 100%;
     height: auto;
-    aspect-ratio: 2 / 3;
+    /* ▼▼▼ MODIFIED: Aspect ratio changed to 3:2 ▼▼▼ */
+    aspect-ratio: 3 / 2;
     object-fit: cover;
     display: block;
     background-color: #eee;
@@ -155,7 +156,6 @@ footer { text-align: center; padding: 2rem 0; margin-top: 2rem; background-color
 .nav-toggle:checked + .nav-toggle-label span::before { transform: rotate(45deg); top: 0; }
 .nav-toggle:checked + .nav-toggle-label span::after { transform: rotate(-45deg); top: 0; }
 
-/* ▼▼▼ PERUBAHAN DI SINI: Penyesuaian responsif untuk grid 5 kolom ▼▼▼ */
 @media (max-width: 1200px) {
     .content-grid {
         grid-template-columns: repeat(4, 1fr); /* 4 kolom untuk tablet */
@@ -202,7 +202,8 @@ footer { text-align: center; padding: 2rem 0; margin-top: 2rem; background-color
 .detail-image img {
     width: 100%;
     height: auto;
-    aspect-ratio: 2 / 3;
+    /* ▼▼▼ MODIFIED: Aspect ratio changed to 3:2 ▼▼▼ */
+    aspect-ratio: 3 / 2;
     object-fit: cover;
     border-radius: 8px;
     background-color: #eee;
