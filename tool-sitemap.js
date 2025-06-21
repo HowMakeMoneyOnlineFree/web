@@ -18,12 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
     
+    // ▼▼▼ MODIFIED: generateSeoTitle function updated to remove the number ▼▼▼
     function generateSeoTitle(baseKeyword) {
         const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained'];
         const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)];
-        const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
         const capitalizedKeyword = capitalizeEachWord(baseKeyword);
-        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`;
+        return `${randomHook} ${capitalizedKeyword}`;
     }
     
     function escapeXml(unsafe) {
@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
             const pageUrl = `${siteUrl}/detail.html?q=${encodeURIComponent(keywordForUrl)}`;
 
-            // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar ▼▼▼
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}`;
+            // ▼▼▼ MODIFIED: Image size changed to extra large (1200x800) ▼▼▼
+            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&w=1200&h=800`;
             const imageTitle = generateSeoTitle(keyword);
 
             xml += '  <url>\n';
