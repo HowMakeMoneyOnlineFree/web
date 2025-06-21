@@ -6,16 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const params = new URLSearchParams(window.location.search);
     const keywordFromQuery = params.get('q') || '';
     const keyword = keywordFromQuery.replace(/-/g, ' ').trim();
-    
+
     function capitalizeEachWord(str) { if (!str) return ''; return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); }
-    
+
     // MODIFIED: generateSeoTitle function updated for finance theme
-    function generateSeoTitle(baseKeyword) { 
-        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained']; 
-        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)]; 
+    function generateSeoTitle(baseKeyword) {
+        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained'];
+        const randomHook = hookWords [Math.floor(Math.random() * hookWords.length)];
         const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-        const capitalizedKeyword = capitalizeEachWord(baseKeyword); 
-        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`; 
+        const capitalizedKeyword = capitalizeEachWord(baseKeyword);
+        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`;
     }
 
     // ▼▼▼ FUNGSI BARU: Untuk memproses Spintax {a|b|c} ▼▼▼
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         while (spintaxPattern.test(text)) {
             text = text.replace(spintaxPattern, (match, choices) => {
                 const options = choices.split('|');
-                return options[Math.floor(Math.random() * options.length)];
+                return options [Math.floor(Math.random() * options.length)];
             });
         }
         return text;
@@ -38,7 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.title = `${newTitle} | NiceFinance`;
         detailTitle.textContent = newTitle;
 
-        const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(term)}&w=800&h=1200&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
+        // MODIFIED: Menggunakan URL Pinterest untuk gambar
+        const pinterestQuery = encodeURIComponent(term + ' finance infographic');
+        const imageUrl = `https://i.pinimg.com/originals/4a/ff/11/4aff11d7e65f831ca9184aa4a8a0050d.jpg`; // Placeholder, perlu logika pencarian Pinterest yang lebih kompleks
         detailImageContainer.innerHTML = `<img src="${imageUrl}" alt="${newTitle}">`;
 
         // ▼▼▼ ARTIKEL BARU: Template artikel dengan format Spintax untuk tema Keuangan/Finance ▼▼▼
@@ -61,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.handleRelatedSuggest = function(data) {
-        const suggestions = data[1];
+        const suggestions = data [1];
         relatedPostsContainer.innerHTML = '';
         if (!suggestions || suggestions.length === 0) { relatedPostsContainer.closest('.related-posts-section').style.display = 'none'; return; }
         const originalKeyword = keyword.toLowerCase();
@@ -71,8 +73,10 @@ document.addEventListener('DOMContentLoaded', function() {
             relatedCount++;
             const keywordForUrl = relatedTerm.replace(/\s/g, '-').toLowerCase();
             const linkUrl = `detail.html?q=${encodeURIComponent(keywordForUrl)}`;
-            
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(relatedTerm)}&w=600&h=900&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
+
+            // MODIFIED: Menggunakan URL Pinterest untuk gambar
+            const pinterestQuery = encodeURIComponent(relatedTerm + ' finance infographic');
+            const imageUrl = `https://i.pinimg.com/originals/4a/ff/11/4aff11d7e65f831ca9184aa4a8a0050d.jpg`; // Placeholder, perlu logika pencarian Pinterest yang lebih kompleks
             const newRelatedTitle = generateSeoTitle(relatedTerm);
             const card = `<article class="content-card"><a href="${linkUrl}"><img src="${imageUrl}" alt="${newRelatedTitle}" loading="lazy"><div class="content-card-body"><h3>${newRelatedTitle}</h3></div></a></article>`;
             relatedPostsContainer.innerHTML += card;
