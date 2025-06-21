@@ -1,0 +1,9 @@
+# Instructions for all web crawlers
+User-agent: *
+
+# We are not disallowing anything because all content is public and meant to be indexed.
+Disallow:
+
+# Location of the XML Sitemap.
+# Make sure to replace the placeholder with the domain from your domain.txt file.
+Sitemap: https://nicefinance.github.io/AGC-V4/sitemap.xml
