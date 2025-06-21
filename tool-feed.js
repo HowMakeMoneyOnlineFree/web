@@ -10,18 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const endDateInput = document.getElementById('end-date');
 
     // --- Fungsi Bantuan ---
-    function capitalizeEachWord(str) {
-        if (!str) return '';
-        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    function capitalizeEachWord(str) { 
+        if (!str) return ''; 
+        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); 
     }
-
-    // MODIFIED: generateSeoTitle function updated for finance theme
-    function generateSeoTitle(baseKeyword) {
-        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained'];
-        const randomHook = hookWords [Math.floor(Math.random() * hookWords.length)];
+    
+    function generateSeoTitle(baseKeyword) { 
+        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained']; 
+        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)]; 
         const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-        const capitalizedKeyword = capitalizeEachWord(baseKeyword);
-        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`;
+        const capitalizedKeyword = capitalizeEachWord(baseKeyword); 
+        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`; 
     }
 
     function escapeXml(unsafe) {
@@ -38,19 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /**
-     * Menghasilkan Feed RSS 2.0 dengan Distribusi Tanggal
-     * @param {Array<string>} keywordList - Daftar keyword terpilih.
-     * @param {string} siteUrl - URL dasar website.
-     * @param {Date} startDate - Tanggal mulai untuk publikasi.
-     * @param {number} postsPerDay - Jumlah post yang akan dipublikasikan per hari.
-     * @returns {string} String XML lengkap.
-     */
     function generateRssFeed(keywordList, siteUrl, startDate, postsPerDay) {
         let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
         xml += `<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">\n`;
         xml += `<channel>\n`;
-        // MODIFIED: Title and description updated for finance theme
         xml += `    <title>NiceFinance Feed</title>\n<link>${siteUrl}</link>\n<description>Latest Tips and Strategies for Personal Finance and Investing</description>\n`;
         xml += `    <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml" />\n\n`;
 
@@ -68,13 +58,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const title = generateSeoTitle(keyword);
             const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
             const articleUrl = `${siteUrl}/detail.html?q=${encodeURIComponent(keywordForUrl)}`;
-            // MODIFIED: Menggunakan URL Pinterest untuk gambar
-            const pinterestQuery = encodeURIComponent(keyword + ' finance infographic');
-            const imageUrl = `https://i.pinimg.com/originals/4a/ff/11/4aff11d7e65f831ca9184aa4a8a0050d.jpg`; // Placeholder, perlu logika pencarian Pinterest yang lebih kompleks
 
+            // ▼▼▼ MODIFIED: Added "site:pinterest.com" to the image URL query ▼▼▼
+            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(`site:pinterest.com ${keyword}`)}&amp;w=400&amp;h=600&amp;c=7&amp;rs=1&amp;p=0&amp;dpr=1.5&amp;pid=1.7`;
+            
             const capitalizedKeyword = capitalizeEachWord(keyword);
-
-            // MODIFIED: Description updated for finance theme
             const description = `Looking for information on ${capitalizedKeyword}? Discover expert insights and actionable strategies. Click to learn more and improve your financial literacy!`;
 
             const escapedTitle = escapeXml(title);
@@ -93,13 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return xml;
     }
 
-    // --- Logika Utama Saat Tombol Diklik ---
     generateBtn.addEventListener('click', async () => {
         const keywordListData = keywordListInput.value;
         const startDateVal = startDateInput.value;
         const endDateVal = endDateInput.value;
 
-        // Validasi input
         if (!keywordListData.trim()) {
             statusOutput.textContent = 'Error: Please enter at least one keyword in the list.';
             statusOutput.style.color = 'red';
@@ -118,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
             statusOutput.style.color = 'red';
             return;
         }
-
+        
         try {
             statusOutput.textContent = 'Status: Processing...';
             statusOutput.style.color = '#333';
@@ -141,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const postsPerDay = Math.ceil(keywordSelection.length / diffDays);
 
             statusOutput.textContent = `Status: Processing ${keywordSelection.length} keywords over ${diffDays} days (${postsPerDay} posts/day)...`;
-
+            
             const feedXml = generateRssFeed(keywordSelection, siteUrl, startDate, postsPerDay);
 
             const blob = new Blob([feedXml], { type: 'application/rss+xml;charset=utf-8' });
@@ -166,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Set tanggal default ke hari ini
     const today = new Date().toISOString().slice(0, 10);
     startDateInput.value = today;
     endDateInput.value = today;
