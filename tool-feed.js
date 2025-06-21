@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
             const articleUrl = `${siteUrl}/detail.html?q=${encodeURIComponent(keywordForUrl)}`;
 
-            // ▼▼▼ MODIFIED: Added "site:pinterest.com" to the image URL query ▼▼▼
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(`site:pinterest.com ${keyword}`)}&amp;w=400&amp;h=600&amp;c=7&amp;rs=1&amp;p=0&amp;dpr=1.5&amp;pid=1.7`;
+            // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar ▼▼▼
+            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&amp;w=400&amp;h=600&amp;c=7&amp;rs=1&amp;p=0&amp;dpr=1.5&amp;pid=1.7`;
             
             const capitalizedKeyword = capitalizeEachWord(keyword);
             const description = `Looking for information on ${capitalizedKeyword}? Discover expert insights and actionable strategies. Click to learn more and improve your financial literacy!`;
