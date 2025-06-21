@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.title = `${newTitle} | NiceFinance`;
         detailTitle.textContent = newTitle;
 
-        // ▼▼▼ MODIFIED: Added "site:pinterest.com" to the main image URL query ▼▼▼
-        const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(`site:pinterest.com ${term}`)}&w=800&h=1200&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
+        // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar utama ▼▼▼
+        const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(term)}&w=800&h=1200&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
         detailImageContainer.innerHTML = `<img src="${imageUrl}" alt="${newTitle}">`;
 
         const spintaxArticleTemplate = `
@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const keywordForUrl = relatedTerm.replace(/\s/g, '-').toLowerCase();
             const linkUrl = `detail.html?q=${encodeURIComponent(keywordForUrl)}`;
             
-            // ▼▼▼ MODIFIED: Added "site:pinterest.com" to the related posts image URL query ▼▼▼
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(`site:pinterest.com ${relatedTerm}`)}&w=600&h=900&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
+            // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar terkait ▼▼▼
+            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(relatedTerm)}&w=600&h=900&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
             const newRelatedTitle = generateSeoTitle(relatedTerm);
             const card = `<article class="content-card"><a href="${linkUrl}"><img src="${imageUrl}" alt="${newRelatedTitle}" loading="lazy"><div class="content-card-body"><h3>${newRelatedTitle}</h3></div></a></article>`;
             relatedPostsContainer.innerHTML += card;
