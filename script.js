@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } }
     function capitalizeEachWord(str) { if (!str) return ''; return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); }
     
+    // ▼▼▼ MODIFIED: generateSeoTitle function updated to remove the number ▼▼▼
     function generateSeoTitle(baseKeyword) { 
         const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained']; 
         const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)]; 
-        const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
         const capitalizedKeyword = capitalizeEachWord(baseKeyword); 
-        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`; 
+        return `${randomHook} ${capitalizedKeyword}`; 
     }
 
     function loadNextBatch() {
@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
                 const linkUrl = `detail.html?q=${encodeURIComponent(keywordForUrl)}`; 
 
-                // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar ▼▼▼
-                const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&w=600&h=900&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
+                // ▼▼▼ MODIFIED: Image size changed to extra large (1200x800) ▼▼▼
+                const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&w=1200&h=800&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
                 
                 const newTitle = generateSeoTitle(keyword);
                 const cardHTML = `<article class="content-card"><a href="${linkUrl}"><img src="${imageUrl}" alt="${newTitle}" loading="lazy"><div class="content-card-body"><h3>${newTitle}</h3></div></a></article>`;
