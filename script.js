@@ -5,17 +5,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let isLoading = false;
     const contentContainer = document.getElementById('auto-content-container');
     const loader = document.getElementById('loader');
-        
-    function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } }
+
+    function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array [i], array [j]] = [array [j], array [i]]; } }
     function capitalizeEachWord(str) { if (!str) return ''; return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); }
-    
+
     // MODIFIED: generateSeoTitle function updated for finance theme
-    function generateSeoTitle(baseKeyword) { 
-        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained']; 
-        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)]; 
+    function generateSeoTitle(baseKeyword) {
+        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained'];
+        const randomHook = hookWords [Math.floor(Math.random() * hookWords.length)];
         const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-        const capitalizedKeyword = capitalizeEachWord(baseKeyword); 
-        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`; 
+        const capitalizedKeyword = capitalizeEachWord(baseKeyword);
+        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`;
     }
 
     function loadNextBatch() {
@@ -24,14 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
         loader.style.display = 'block';
 
         const batch = allKeywords.slice(currentIndex, currentIndex + batchSize);
-        
+
         setTimeout(() => {
             batch.forEach(keyword => {
                 const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
-                const linkUrl = `detail.html?q=${encodeURIComponent(keywordForUrl)}`; 
+                const linkUrl = `detail.html?q=${encodeURIComponent(keywordForUrl)}`;
 
-                const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&w=600&h=900&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
-                
+                // MODIFIED: Menggunakan URL Pinterest untuk gambar
+                const pinterestQuery = encodeURIComponent(keyword + ' finance infographic');
+                const imageUrl = `https://i.pinimg.com/originals/4a/ff/11/4aff11d7e65f831ca9184aa4a8a0050d.jpg`; // Placeholder, perlu logika pencarian Pinterest yang lebih kompleks
+
                 const newTitle = generateSeoTitle(keyword);
                 const cardHTML = `<article class="content-card"><a href="${linkUrl}"><img src="${imageUrl}" alt="${newTitle}" loading="lazy"><div class="content-card-body"><h3>${newTitle}</h3></div></a></article>`;
                 contentContainer.innerHTML += cardHTML;
@@ -58,11 +60,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const response = await fetch('keyword.txt');
                 if (!response.ok) throw new Error('keyword.txt file not found.');
                 const text = await response.text();
-                
+
                 const keywords = text.split('\n')
                                      .map(k => k.trim())
                                      .filter(k => k.trim() !== '');
-                
+
                 shuffleArray(keywords);
                 localStorage.setItem('shuffledKeywords', JSON.stringify(keywords));
                 localStorage.setItem('shuffleDate', today);
