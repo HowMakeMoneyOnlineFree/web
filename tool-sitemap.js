@@ -17,17 +17,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!str) return '';
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
-
-    // MODIFIED: generateSeoTitle function updated for finance theme
+    
     function generateSeoTitle(baseKeyword) {
         const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained'];
-        const randomHook = hookWords [Math.floor(Math.random() * hookWords.length)];
+        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)];
         const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
         const capitalizedKeyword = capitalizeEachWord(baseKeyword);
         return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`;
     }
-
-    // Fungsi untuk menghindari error pada karakter spesial di XML (contoh: &)
+    
     function escapeXml(unsafe) {
         return unsafe.replace(/[<>&'"]/g, function (c) {
             switch (c) {
@@ -45,14 +43,12 @@ document.addEventListener('DOMContentLoaded', function() {
      * Menghasilkan sitemap dengan tambahan informasi gambar.
      */
     function generateSitemapXml(keywordList, siteUrl, startDate, postsPerDay) {
-        // Header Sitemap XML dengan tambahan namespace untuk gambar: xmlns:image
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
         xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n';
 
         keywordList.forEach((keyword, index) => {
             if (!keyword) return;
 
-            // Logika distribusi tanggal tetap sama
             const dayOffset = Math.floor(index / postsPerDay);
             const postDate = new Date(startDate);
             postDate.setDate(postDate.getDate() + dayOffset);
@@ -65,9 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
             const pageUrl = `${siteUrl}/detail.html?q=${encodeURIComponent(keywordForUrl)}`;
 
-            // Siapkan data untuk blok gambar
-            const pinterestQuery = encodeURIComponent(keyword + ' finance infographic');
-            const imageUrl = `https://i.pinimg.com/originals/4a/ff/11/4aff11d7e65f831ca9184aa4a8a0050d.jpg`; // Placeholder, perlu logika pencarian Pinterest yang lebih kompleks
+            // ▼▼▼ MODIFIED: Added "site:pinterest.com" to the image URL query ▼▼▼
+            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(`site:pinterest.com ${keyword}`)}`;
             const imageTitle = generateSeoTitle(keyword);
 
             xml += '  <url>\n';
@@ -75,13 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
             xml += `    <lastmod>${lastmod}</lastmod>\n`;
             xml += '    <changefreq>daily</changefreq>\n';
             xml += '    <priority>0.7</priority>\n';
-
-            // ▼▼▼ BLOK INFORMASI GAMBAR DITAMBAHKAN DI SINI ▼▼▼
+            
             xml += '    <image:image>\n';
             xml += `        <image:loc>${imageUrl}</image:loc>\n`;
             xml += `        <image:title>${escapeXml(imageTitle)}</image:title>\n`;
             xml += '    </image:image>\n';
-
+            
             xml += '  </url>\n';
         });
 
@@ -89,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return xml;
     }
 
-    // --- Logika Utama Saat Tombol Diklik (Tidak ada perubahan signifikan di sini) ---
     generateBtn.addEventListener('click', async () => {
         let startNum = parseInt(startIndexInput.value, 10);
         let endNum = parseInt(endIndexInput.value, 10);
@@ -162,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
             generateBtn.textContent = 'Generate & Download sitemap.xml';
         }
     });
-
+    
     const today = new Date().toISOString().slice(0, 10);
     startDateInput.value = today;
     endDateInput.value = today;
