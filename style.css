@@ -37,7 +37,7 @@ header .container {
 
 .logo {
     font-size: 1.8rem;
-    color: #28a745; /* MODIFIED: New theme color */
+    color: #28a745;
     font-weight: 700;
 }
 
@@ -59,7 +59,7 @@ nav ul li a {
 }
 
 nav ul li a:hover, nav ul li a.active {
-    color: #28a745; /* MODIFIED: New theme color */
+    color: #28a745;
 }
 
 /* Konten Utama */
@@ -84,9 +84,9 @@ main {
 
 .content-grid {
     display: grid;
-    /* Menampilkan 5 kolom di layar besar */
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px; /* Sedikit mengurangi gap agar pas */
+    /* ▼▼▼ MODIFIED: Grid changed to 3 columns for PC view ▼▼▼ */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
 /* Kartu Konten */
@@ -106,7 +106,6 @@ main {
 .content-card img {
     width: 100%;
     height: auto;
-    /* ▼▼▼ MODIFIED: Aspect ratio changed to 3:2 ▼▼▼ */
     aspect-ratio: 3 / 2;
     object-fit: cover;
     display: block;
@@ -131,7 +130,7 @@ main {
 /* Loader untuk Infinite Scroll */
 .loader {
     border: 5px solid #f3f3f3;
-    border-top: 5px solid #28a745; /* MODIFIED: New theme color */
+    border-top: 5px solid #28a745;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -156,15 +155,12 @@ footer { text-align: center; padding: 2rem 0; margin-top: 2rem; background-color
 .nav-toggle:checked + .nav-toggle-label span::before { transform: rotate(45deg); top: 0; }
 .nav-toggle:checked + .nav-toggle-label span::after { transform: rotate(-45deg); top: 0; }
 
-@media (max-width: 1200px) {
-    .content-grid {
-        grid-template-columns: repeat(4, 1fr); /* 4 kolom untuk tablet */
-    }
-}
+/* ▼▼▼ MODIFIED: Removed obsolete media queries for 5 and 4 columns ▼▼▼ */
 
 @media (max-width: 992px) {
+    /* Tablet and smaller devices will show 2 columns */
     .content-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 kolom untuk tablet kecil */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -183,26 +179,30 @@ footer { text-align: center; padding: 2rem 0; margin-top: 2rem; background-color
     .section-title { font-size: 1.5rem; }
     .download-buttons-container { flex-direction: column; width: 100%; }
     .tool-input { width: 100%; }
-    
-    .content-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 kolom untuk mobile */
-    }
 }
 
 @media (max-width: 480px) {
+    /* Mobile devices will show 1 column */
     .content-grid {
-        grid-template-columns: 1fr; /* 1 kolom untuk layar sangat kecil */
+        grid-template-columns: 1fr;
     }
 }
 
 /* --- Styles untuk Halaman Detail --- */
 .main-article { background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 3rem; }
 .main-article h1 { font-size: 2.8rem; line-height: 1.2; margin-bottom: 1.5rem; }
-.detail-image { margin-bottom: 1.5rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+/* ▼▼▼ MODIFIED: Main image is now full-width ▼▼▼ */
+.detail-image {
+    margin-bottom: 1.5rem;
+    width: 100%; /* Ensure the container takes full width */
+    max-width: none; /* Remove max-width limit */
+    margin-left: 0;
+    margin-right: 0;
+}
 .detail-image img {
     width: 100%;
     height: auto;
-    /* ▼▼▼ MODIFIED: Aspect ratio changed to 3:2 ▼▼▼ */
     aspect-ratio: 3 / 2;
     object-fit: cover;
     border-radius: 8px;
@@ -210,13 +210,13 @@ footer { text-align: center; padding: 2rem 0; margin-top: 2rem; background-color
 }
 .article-content { margin-top: 2rem; }
 .article-content p { font-size: 1.1rem; margin-bottom: 1.5rem; color: #444; }
-.article-content strong { color: #28a745; } /* MODIFIED: New theme color */
+.article-content strong { color: #28a745; }
 .section-title { font-size: 2rem; text-align: center; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem; }
 
 /* --- Style untuk Tombol Download --- */
 .download-buttons-container { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
 .download-button { display: inline-block; background-color: #28a745; color: #fff; padding: 0.8rem 1.8rem; border-radius: 5px; text-decoration: none; font-weight: 600; text-align: center; transition: background-color 0.3s ease, transform 0.2s ease; border: none; cursor: pointer; }
-.download-button:hover { background-color: #218838; transform: scale(1.05); } /* MODIFIED: New theme hover color */
+.download-button:hover { background-color: #218838; transform: scale(1.05); }
 
 @media (min-width: 769px) { .nav-toggle-label { display: none !important; } nav { display: block; } }
 
