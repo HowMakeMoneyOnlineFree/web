@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); 
     }
     
+    // ▼▼▼ MODIFIED: generateSeoTitle function updated to remove the number ▼▼▼
     function generateSeoTitle(baseKeyword) { 
         const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained']; 
-        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)]; 
-        const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
+        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)];
         const capitalizedKeyword = capitalizeEachWord(baseKeyword); 
-        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`; 
+        return `${randomHook} ${capitalizedKeyword}`; 
     }
 
     function escapeXml(unsafe) {
@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
             const articleUrl = `${siteUrl}/detail.html?q=${encodeURIComponent(keywordForUrl)}`;
 
-            // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar ▼▼▼
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&amp;w=400&amp;h=600&amp;c=7&amp;rs=1&amp;p=0&amp;dpr=1.5&amp;pid=1.7`;
+            // ▼▼▼ MODIFIED: Image size changed to extra large (1200x800) ▼▼▼
+            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&amp;w=1200&amp;h=800&amp;c=7&amp;rs=1&amp;p=0&amp;dpr=1.5&amp;pid=1.7`;
             
             const capitalizedKeyword = capitalizeEachWord(keyword);
             const description = `Looking for information on ${capitalizedKeyword}? Discover expert insights and actionable strategies. Click to learn more and improve your financial literacy!`;
