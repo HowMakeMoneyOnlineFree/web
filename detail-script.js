@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function capitalizeEachWord(str) { if (!str) return ''; return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); }
     
+    // ▼▼▼ MODIFIED: generateSeoTitle function updated to remove the number ▼▼▼
     function generateSeoTitle(baseKeyword) { 
         const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained']; 
-        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)]; 
-        const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
+        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)];
         const capitalizedKeyword = capitalizeEachWord(baseKeyword); 
-        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`; 
+        return `${randomHook} ${capitalizedKeyword}`; 
     }
 
     function processSpintax(text) {
@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.title = `${newTitle} | NiceFinance`;
         detailTitle.textContent = newTitle;
 
-        // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar utama ▼▼▼
-        const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(term)}&w=800&h=1200&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
+        // ▼▼▼ MODIFIED: Main image size changed to extra large (1200x800) ▼▼▼
+        const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(term)}&w=1200&h=800&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
         detailImageContainer.innerHTML = `<img src="${imageUrl}" alt="${newTitle}">`;
 
         const spintaxArticleTemplate = `
@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const keywordForUrl = relatedTerm.replace(/\s/g, '-').toLowerCase();
             const linkUrl = `detail.html?q=${encodeURIComponent(keywordForUrl)}`;
             
-            // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar terkait ▼▼▼
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(relatedTerm)}&w=600&h=900&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
+            // ▼▼▼ MODIFIED: Related posts image size changed to extra large (1200x800) ▼▼▼
+            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(relatedTerm)}&w=1200&h=800&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
             const newRelatedTitle = generateSeoTitle(relatedTerm);
             const card = `<article class="content-card"><a href="${linkUrl}"><img src="${imageUrl}" alt="${newRelatedTitle}" loading="lazy"><div class="content-card-body"><h3>${newRelatedTitle}</h3></div></a></article>`;
             relatedPostsContainer.innerHTML += card;
