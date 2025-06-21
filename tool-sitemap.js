@@ -17,16 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!str) return '';
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
-    
+
     // MODIFIED: generateSeoTitle function updated for finance theme
     function generateSeoTitle(baseKeyword) {
         const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained'];
-        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)];
+        const randomHook = hookWords [Math.floor(Math.random() * hookWords.length)];
         const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
         const capitalizedKeyword = capitalizeEachWord(baseKeyword);
         return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`;
     }
-    
+
     // Fungsi untuk menghindari error pada karakter spesial di XML (contoh: &)
     function escapeXml(unsafe) {
         return unsafe.replace(/[<>&'"]/g, function (c) {
@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const pageUrl = `${siteUrl}/detail.html?q=${encodeURIComponent(keywordForUrl)}`;
 
             // Siapkan data untuk blok gambar
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}`;
+            const pinterestQuery = encodeURIComponent(keyword + ' finance infographic');
+            const imageUrl = `https://i.pinimg.com/originals/4a/ff/11/4aff11d7e65f831ca9184aa4a8a0050d.jpg`; // Placeholder, perlu logika pencarian Pinterest yang lebih kompleks
             const imageTitle = generateSeoTitle(keyword);
 
             xml += '  <url>\n';
@@ -74,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
             xml += `    <lastmod>${lastmod}</lastmod>\n`;
             xml += '    <changefreq>daily</changefreq>\n';
             xml += '    <priority>0.7</priority>\n';
-            
+
             // ▼▼▼ BLOK INFORMASI GAMBAR DITAMBAHKAN DI SINI ▼▼▼
             xml += '    <image:image>\n';
             xml += `        <image:loc>${imageUrl}</image:loc>\n`;
             xml += `        <image:title>${escapeXml(imageTitle)}</image:title>\n`;
             xml += '    </image:image>\n';
-            
+
             xml += '  </url>\n';
         });
 
@@ -161,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
             generateBtn.textContent = 'Generate & Download sitemap.xml';
         }
     });
-    
+
     const today = new Date().toISOString().slice(0, 10);
     startDateInput.value = today;
     endDateInput.value = today;
