@@ -6,4 +6,4 @@ Disallow:
 
 # Location of the XML Sitemap.
 # Make sure to replace the placeholder with the domain from your domain.txt file.
-Sitemap: https://nicefinance.github.io/AGC-V4/sitemap.xml
+Sitemap: https://HowMakeMoneyOnlineFree.github.io/web/sitemap.xml
