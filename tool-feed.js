@@ -10,18 +10,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const endDateInput = document.getElementById('end-date');
 
     // --- Fungsi Bantuan ---
-    function capitalizeEachWord(str) { 
-        if (!str) return ''; 
-        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); 
+    function capitalizeEachWord(str) {
+        if (!str) return '';
+        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
-    
+
     // MODIFIED: generateSeoTitle function updated for finance theme
-    function generateSeoTitle(baseKeyword) { 
-        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained']; 
-        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)]; 
+    function generateSeoTitle(baseKeyword) {
+        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained'];
+        const randomHook = hookWords [Math.floor(Math.random() * hookWords.length)];
         const randomNumber = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-        const capitalizedKeyword = capitalizeEachWord(baseKeyword); 
-        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`; 
+        const capitalizedKeyword = capitalizeEachWord(baseKeyword);
+        return `${randomNumber}+ ${randomHook} ${capitalizedKeyword}`;
     }
 
     function escapeXml(unsafe) {
@@ -68,10 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const title = generateSeoTitle(keyword);
             const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
             const articleUrl = `${siteUrl}/detail.html?q=${encodeURIComponent(keywordForUrl)}`;
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&amp;w=400&amp;h=600&amp;c=7&amp;rs=1&amp;p=0&amp;dpr=1.5&amp;pid=1.7`;
-            
+            // MODIFIED: Menggunakan URL Pinterest untuk gambar
+            const pinterestQuery = encodeURIComponent(keyword + ' finance infographic');
+            const imageUrl = `https://i.pinimg.com/originals/4a/ff/11/4aff11d7e65f831ca9184aa4a8a0050d.jpg`; // Placeholder, perlu logika pencarian Pinterest yang lebih kompleks
+
             const capitalizedKeyword = capitalizeEachWord(keyword);
-            
+
             // MODIFIED: Description updated for finance theme
             const description = `Looking for information on ${capitalizedKeyword}? Discover expert insights and actionable strategies. Click to learn more and improve your financial literacy!`;
 
@@ -116,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             statusOutput.style.color = 'red';
             return;
         }
-        
+
         try {
             statusOutput.textContent = 'Status: Processing...';
             statusOutput.style.color = '#333';
@@ -139,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const postsPerDay = Math.ceil(keywordSelection.length / diffDays);
 
             statusOutput.textContent = `Status: Processing ${keywordSelection.length} keywords over ${diffDays} days (${postsPerDay} posts/day)...`;
-            
+
             const feedXml = generateRssFeed(keywordSelection, siteUrl, startDate, postsPerDay);
 
             const blob = new Blob([feedXml], { type: 'application/rss+xml;charset=utf-8' });
