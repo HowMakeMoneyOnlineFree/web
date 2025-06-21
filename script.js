@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
                 const linkUrl = `detail.html?q=${encodeURIComponent(keywordForUrl)}`; 
 
-                // ▼▼▼ MODIFIED: Added "site:pinterest.com" to the image URL query ▼▼▼
-                const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(`site:pinterest.com ${keyword}`)}&w=600&h=900&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
+                // ▼▼▼ PERBAIKAN: Menghapus "site:pinterest.com" dari query URL gambar ▼▼▼
+                const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&w=600&h=900&c=7&rs=1&p=0&dpr=1.5&pid=1.7`;
                 
                 const newTitle = generateSeoTitle(keyword);
                 const cardHTML = `<article class="content-card"><a href="${linkUrl}"><img src="${imageUrl}" alt="${newTitle}" loading="lazy"><div class="content-card-body"><h3>${newTitle}</h3></div></a></article>`;
