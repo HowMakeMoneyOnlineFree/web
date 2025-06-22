@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); 
     }
     
-    // ▼▼▼ MODIFIED: generateSeoTitle function updated to remove the number ▼▼▼
     function generateSeoTitle(baseKeyword) { 
-        const hookWords = ['Expert', 'Essential', 'Smart', 'Simple', 'Complete', 'Practical', 'Actionable', 'Beginner', 'Advanced', 'Guide', 'Tips', 'Strategies', 'Explained']; 
-        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)];
+        const hookWords = ['Best', 'Amazing', 'Cool', 'Inspiring', 'Creative', 'Awesome', 'Stunning', 'Beautiful', 'Unique', 'Ideas', 'Inspiration', 'Designs']; 
+        const randomHook = hookWords[Math.floor(Math.random() * hookWords.length)]; 
+        const randomNumber = Math.floor(Math.random() * (200 - 55 + 1)) + 55; 
         const capitalizedKeyword = capitalizeEachWord(baseKeyword); 
-        return `${randomHook} ${capitalizedKeyword}`; 
+        return `${randomNumber} ${randomHook} ${capitalizedKeyword}`; 
     }
 
     function escapeXml(unsafe) {
@@ -37,11 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    /**
+     * Menghasilkan Feed RSS 2.0 dengan Distribusi Tanggal
+     * @param {Array<string>} keywordList - Daftar keyword terpilih.
+     * @param {string} siteUrl - URL dasar website.
+     * @param {Date} startDate - Tanggal mulai untuk publikasi.
+     * @param {number} postsPerDay - Jumlah post yang akan dipublikasikan per hari.
+     * @returns {string} String XML lengkap.
+     */
     function generateRssFeed(keywordList, siteUrl, startDate, postsPerDay) {
         let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
         xml += `<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">\n`;
         xml += `<channel>\n`;
-        xml += `    <title>NiceFinance Feed</title>\n<link>${siteUrl}</link>\n<description>Latest Tips and Strategies for Personal Finance and Investing</description>\n`;
+        xml += `    <title>DecorInspire Feed</title>\n<link>${siteUrl}</link>\n<description>Latest Design and Decor Inspirations</description>\n`;
         xml += `    <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml" />\n\n`;
 
         keywordList.forEach((keyword, index) => {
@@ -58,12 +66,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const title = generateSeoTitle(keyword);
             const keywordForUrl = keyword.replace(/\s/g, '-').toLowerCase();
             const articleUrl = `${siteUrl}/detail.html?q=${encodeURIComponent(keywordForUrl)}`;
-
-            // ▼▼▼ MODIFIED: Image size changed to extra large (1200x800) ▼▼▼
-            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&amp;w=1200&amp;h=800&amp;c=7&amp;rs=1&amp;p=0&amp;dpr=1.5&amp;pid=1.7`;
+            const imageUrl = `https://tse1.mm.bing.net/th?q=${encodeURIComponent(keyword)}&amp;w=400&amp;h=600&amp;c=7&amp;rs=1&amp;p=0&amp;dpr=1.5&amp;pid=1.7`;
             
             const capitalizedKeyword = capitalizeEachWord(keyword);
-            const description = `Looking for information on ${capitalizedKeyword}? Discover expert insights and actionable strategies. Click to learn more and improve your financial literacy!`;
+            // BARU: Deskripsi dibuat tanpa hashtag dan variabel hashtag dihapus.
+            const description = `Craving new ideas for ${capitalizedKeyword}? Discover amazing concepts and stunning visuals. Click to get the full inspiration now!`;
 
             const escapedTitle = escapeXml(title);
             const escapedDescription = escapeXml(description);
@@ -81,11 +88,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return xml;
     }
 
+    // --- Logika Utama Saat Tombol Diklik ---
     generateBtn.addEventListener('click', async () => {
         const keywordListData = keywordListInput.value;
         const startDateVal = startDateInput.value;
         const endDateVal = endDateInput.value;
 
+        // Validasi input
         if (!keywordListData.trim()) {
             statusOutput.textContent = 'Error: Please enter at least one keyword in the list.';
             statusOutput.style.color = 'red';
@@ -152,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Set tanggal default ke hari ini
     const today = new Date().toISOString().slice(0, 10);
     startDateInput.value = today;
     endDateInput.value = today;
